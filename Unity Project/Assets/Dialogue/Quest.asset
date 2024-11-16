@@ -1,0 +1,138 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 131cbb4d464b3ea4e8ab550234ff66fd, type: 3}
+  m_Name: Quest
+  m_EditorClassIdentifier: 
+  RootNode:
+    dialogueText: Hello Sir. Would you like to help me with some chores around the
+      house? It will help me a lot and I will compensate you 10 gold coins for your
+      time and effort.
+    responses:
+    - responseText: What kind of chores do you need done?
+      nextNode:
+        dialogueText: Well, first I need to collect some apples that have fallen
+          from the apple trees across the house. I plan to make a delicious apple
+          pie with them. Secondly, I plan to make a mushroom soup, but once again
+          I need to collect some mushrooms.
+        responses:
+        - responseText: I will collect the apples.
+          nextNode:
+            dialogueText: Wonderful! I need 12 in total to make the pie. Let me know
+              whenever you are done.
+            responses:
+            - responseText: '*Leave*'
+              nextNode:
+                dialogueText: 
+                responses: []
+              quest: 1
+          quest: 0
+        - responseText: I will collect the mushrooms.
+          nextNode:
+            dialogueText: Wonderful! I need 8 in total to make the soup. You can
+              find some mushrooms behind that small hill next to the apple trees.
+              Let me know whenever you are done.
+            responses:
+            - responseText: '*Leave*'
+              nextNode:
+                dialogueText: 
+                responses: []
+              quest: 2
+          quest: 0
+        - responseText: Nevermind, I don't have time.
+          nextNode:
+            dialogueText: That's a pity...
+            responses:
+            - responseText: '*Leave*'
+              nextNode:
+                dialogueText: 
+                responses: []
+              quest: 0
+          quest: 0
+      quest: 0
+    - responseText: Forget the chores, give me all of your money!
+      nextNode:
+        dialogueText: 
+        responses: []
+      quest: 3
+    - responseText: '*Bargain for more money*'
+      nextNode:
+        dialogueText: I can give you 2 extra gold pieces, but that is all I can give
+          you.
+        responses:
+        - responseText: What kind of chores do you need done?
+          nextNode:
+            dialogueText: Well, first I need to collect all of the apples that have
+              fallen from the apple trees across the house. I plan to make a delicious
+              apple pie with them. Secondly, I plan to make a mushroom soup, but
+              once again I need to collect some mushrooms.
+            responses:
+            - responseText: I will collect the apples.
+              nextNode:
+                dialogueText: Wonderful! I need 12 in total to make the pie. Let
+                  me know whenever you are done.
+                responses:
+                - responseText: '*Leave*'
+                  nextNode:
+                    dialogueText: 
+                    responses: []
+                  quest: 4
+              quest: 0
+            - responseText: I will collect the mushrooms
+              nextNode:
+                dialogueText: Wonderful! I need 8 in total to make the soup. You
+                  can find some mushrooms behind that small hill next to the apple
+                  trees. Let me know whenever you are done.
+                responses:
+                - responseText: '*Leave*'
+                  nextNode:
+                    dialogueText: 
+                    responses: []
+                  quest: 5
+              quest: 0
+            - responseText: Nevermind, I don't have time.
+              nextNode:
+                dialogueText: That's a pity...
+                responses:
+                - responseText: '*Leave*'
+                  nextNode:
+                    dialogueText: 
+                    responses: []
+                  quest: 0
+              quest: 0
+          quest: 0
+        - responseText: Nevermind, I don't have time.
+          nextNode:
+            dialogueText: That's a pity...
+            responses:
+            - responseText: '*Leave*'
+              nextNode:
+                dialogueText: 
+                responses: []
+              quest: 0
+          quest: 0
+        - responseText: '*Bargain for more money*'
+          nextNode:
+            dialogueText: You greedy little... Forget it, I don't want your help!
+              Get off my property or I will throw you out myself!
+            responses:
+            - responseText: '*Leave*'
+              nextNode:
+                dialogueText: 
+                responses: []
+              quest: 0
+            - responseText: Bring it on then!
+              nextNode:
+                dialogueText: 
+                responses: []
+              quest: 3
+          quest: 0
+      quest: 0

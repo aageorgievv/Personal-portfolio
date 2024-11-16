@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 131cbb4d464b3ea4e8ab550234ff66fd, type: 3}
+  m_Name: DialogueAppleC
+  m_EditorClassIdentifier: 
+  RootNode:
+    dialogueText: 'Thank you for the apples, I know it''s tideous work, but I appreaciate
+      you for helping. Here is your payment.
+
+
+      *Hands you 10 gold coins*'
+    responses:
+    - responseText: Glad to help!
+      nextNode:
+        dialogueText: 'This project was made by Aleksandar Georgiev
+
+
+          Assets
+          creators (Unity Store):
+
+          GooseLi Games - House assets
+
+          Polytope
+          Studio - Environment assets
+
+          Blink - Character assets/animations
+
+
+'
+        responses:
+        - responseText: Continue
+          nextNode:
+            dialogueText: 
+            responses: []
+          quest: 0
+      quest: 0
