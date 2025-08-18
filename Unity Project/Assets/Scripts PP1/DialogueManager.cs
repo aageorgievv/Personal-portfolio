@@ -24,6 +24,16 @@ public class DialogueManager : MonoBehaviour
 
     private EDialogueResult currentDialogueResult = EDialogueResult.None;
 
+
+    //PP2-------------------------------------
+
+    [SerializeField] private NPCController npcController;
+
+
+
+
+    //----------------------------------------
+
     private void Awake()
     {
         // Singleton pattern to ensure only one instance of DialogueManager
@@ -84,7 +94,7 @@ public class DialogueManager : MonoBehaviour
                 case EDialogueResult.QuestCollectApples:
 
                     currentDialogueResult = EDialogueResult.QuestCollectApples;
-                    aiControls.currentDialogueState = EDialogueState.QuestGivenApple;
+                    npcController.SetDialogueState(EDialogueState.QuestGivenApple);
                     questUIManager.GenerateQuestText();
                     icon.SetActive(false);
 
@@ -92,7 +102,8 @@ public class DialogueManager : MonoBehaviour
                 case EDialogueResult.QuestCollectMushrooms:
 
                     currentDialogueResult = EDialogueResult.QuestCollectMushrooms;
-                    aiControls.currentDialogueState = EDialogueState.QuestGivenMushroom;
+                    npcController.SetDialogueState(EDialogueState.QuestGivenMushroom);
+
                     questUIManager.GenerateQuestText();
                     icon.SetActive(false);
 
@@ -105,7 +116,7 @@ public class DialogueManager : MonoBehaviour
                 case EDialogueResult.AppleBargain:
 
                     currentDialogueResult = EDialogueResult.AppleBargain;
-                    aiControls.currentDialogueState = EDialogueState.QuestCompletedBargainedApple;
+                    npcController.SetDialogueState(EDialogueState.QuestCompletedBargainedApple);
                     questUIManager.GenerateQuestText();
                     icon.SetActive(false);
 
@@ -113,7 +124,7 @@ public class DialogueManager : MonoBehaviour
                 case EDialogueResult.MushroomBargain:
 
                     currentDialogueResult = EDialogueResult.MushroomBargain;
-                    aiControls.currentDialogueState = EDialogueState.QuestCompletedBargainedMushroom;
+                    npcController.SetDialogueState(EDialogueState.QuestCompletedBargainedMushroom);
                     questUIManager.GenerateQuestText();
                     icon.SetActive(false);
 

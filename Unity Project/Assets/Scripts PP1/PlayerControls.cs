@@ -28,7 +28,13 @@ public class PlayerControls : MonoBehaviour
 
     public bool isMoving;
 
+    //PP2 ---------------------
 
+    [SerializeField] private float rayCastInteractionDistance = 1.5f;
+
+
+
+    //-------------------------
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -46,7 +52,7 @@ public class PlayerControls : MonoBehaviour
 
     private void Look()
     {
-        if(Cursor.visible)
+        if (Cursor.visible)
         {
             return;
         }
@@ -61,23 +67,24 @@ public class PlayerControls : MonoBehaviour
 
     private void Move()
     {
-        if(Cursor.visible)
+        if (Cursor.visible)
         {
             return;
         }
 
         Vector3 moveDirection = Vector3.zero;
 
-        if(Input.GetKey(KeyCode.W)) moveDirection += transform.forward;
-        if(Input.GetKey(KeyCode.S)) moveDirection -= transform.forward;
-        if(Input.GetKey(KeyCode.D)) moveDirection += transform.right;
-        if(Input.GetKey(KeyCode.A)) moveDirection -= transform.right;
+        if (Input.GetKey(KeyCode.W)) moveDirection += transform.forward;
+        if (Input.GetKey(KeyCode.S)) moveDirection -= transform.forward;
+        if (Input.GetKey(KeyCode.D)) moveDirection += transform.right;
+        if (Input.GetKey(KeyCode.A)) moveDirection -= transform.right;
 
 
-        if(moveDirection.magnitude > 0.1f)
+        if (moveDirection.magnitude > 0.1f)
         {
             isMoving = true;
-        } else
+        }
+        else
         {
             isMoving = false;
         }
@@ -88,24 +95,24 @@ public class PlayerControls : MonoBehaviour
 
     public void PickUpItem()
     {
-        if(Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
             RaycastHit hit;
 
-            if(Physics.Raycast(ray, out hit, rayCastDistance))
+            if (Physics.Raycast(ray, out hit, rayCastDistance))
             {
-                if(hit.transform.CompareTag("Apple"))
+                if (hit.transform.CompareTag("Apple"))
                 {
                     StartCoroutine(PickUpAnimation(hit.transform));
                 }
 
-                if(hit.transform.CompareTag("Mushroom"))
+                if (hit.transform.CompareTag("Mushroom"))
                 {
                     StartCoroutine(PickUpAnimation(hit.transform));
                 }
 
-                if(hit.transform.CompareTag("Anvil"))
+                if (hit.transform.CompareTag("Anvil"))
                 {
                     StartCoroutine(PickUpAnimation(hit.transform));
                     aiControls.IsFighting();
@@ -122,13 +129,13 @@ public class PlayerControls : MonoBehaviour
         Vector3 targetPosition = playerCamera.transform.position + playerCamera.transform.forward;
 
         Collider[] colliders = transform.gameObject.GetComponentsInChildren<Collider>();
-        foreach(Collider collider in colliders)
+        foreach (Collider collider in colliders)
         {
             collider.enabled = false;
         }
 
         float elapsedTime = 0f;
-        while(elapsedTime < duration)
+        while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
 
@@ -150,9 +157,31 @@ public class PlayerControls : MonoBehaviour
 
     private void ResetScene()
     {
-        if(Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+    }
+
+
+    //PP2 Code Below -------------------------------------------------------------------------------------------------------------
+
+    //Later maybe replace the input with the new Input system
+    private void InterractWithNPC()
+    {
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+
+            if(Physics.Raycast(ray, out RaycastHit hit, rayCastInteractionDistance))
+            {
+                NPCController npc = hit.collider.GetComponent<NPCController>();
+
+                if(npc != null)
+                {
+                    npc.TryTalk();
+                }
+            }
         }
     }
 }
