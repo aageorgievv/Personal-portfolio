@@ -31,7 +31,7 @@ public class PlayerControls : MonoBehaviour
 
     //PP2 ---------------------
 
-    public Action<EState> OnSteal;
+    public Action<EState> OnStealEvent;
 
     [SerializeField] private float rayCastInteractionDistance = 3f;
 
@@ -119,7 +119,7 @@ public class PlayerControls : MonoBehaviour
                 if (hit.transform.CompareTag("Anvil"))
                 {
                     StartCoroutine(PickUpAnimation(hit.transform));
-                    OnSteal?.Invoke(EState.Fight);
+                    OnStealEvent?.Invoke(EState.Fight);
                 }
             }
         }
