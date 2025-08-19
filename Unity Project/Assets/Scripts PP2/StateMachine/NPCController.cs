@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using static aiControls;
 public enum EState
 {
@@ -28,11 +29,18 @@ public class NPCController : MonoBehaviour
     private EDialogueState currentDialogueState = EDialogueState.Default;
 
     [Header("References")]
-    [SerializeField] private Transform playerTransform;
+    [SerializeField] private PlayerControls playerControls;
     [SerializeField] private Actor actor;
+    [SerializeField] private Animator npcAnimator;
+    [SerializeField] private Transform npcTransform;
+    [SerializeField] private NavMeshAgent npcAgent;
+    [SerializeField] private Transform playerTransform;
 
     [Header("Settings")]
-    [SerializeField] float interactionDistance = 3f;
+    [SerializeField] float interactionDistance;
+    [SerializeField] private float minPunchSpeed;
+    [SerializeField] private float maxPunchSpeed;
+    [SerializeField] private float runCooldown;
 
     [Header("Quests")]
     public CollectApplesQuest appleQuest;
@@ -43,9 +51,16 @@ public class NPCController : MonoBehaviour
         stateMachine = new StateMachine<EState>();
 
         //Register States
-        stateMachine.AddState(EState.Talk, new TalkState(this, playerTransform, interactionDistance));
+        stateMachine.AddState(EState.Idle, new IdleState());
+        stateMachine.AddState(EState.Talk, new TalkState(this, playerControls.transform, interactionDistance));
+        stateMachine.AddState(EState.Fight, new FightState(this, npcAnimator, npcAgent, playerTransform, minPunchSpeed, maxPunchSpeed, runCooldown));
 
         stateMachine.SetState(EState.Idle);
+
+        if(playerControls != null)
+        {
+            playerControls.OnSteal += SetState;
+        }
     }
 
     private void Update()
@@ -65,7 +80,7 @@ public class NPCController : MonoBehaviour
 
     public void TryTalk()
     {
-        if(Vector3.Distance(transform.position, playerTransform.position) <= interactionDistance)
+        if (Vector3.Distance(transform.position, playerControls.transform.position) <= interactionDistance)
         {
             // Switch dialogues based on the current dialogue state
             switch (currentDialogueState)
@@ -127,6 +142,16 @@ public class NPCController : MonoBehaviour
             }
 
             stateMachine.SetState(EState.Talk);
+        }
+    }
+
+        public void OnPunchHit(Collider other)
+    {
+
+        Vector3 knockbackDirection = (playerControls.transform.position - transform.position).normalized;
+        if(playerControls != null)
+        {
+            playerControls.ApplyKnockback(knockbackDirection);
         }
     }
 }

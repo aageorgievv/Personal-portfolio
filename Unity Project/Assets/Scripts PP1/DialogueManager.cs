@@ -110,7 +110,7 @@ public class DialogueManager : MonoBehaviour
                     break;
                 case EDialogueResult.NPCFightsBack:
 
-                    aiControls.IsFighting();
+                    npcController.SetState(EState.Fight);
 
                     break;
                 case EDialogueResult.AppleBargain:
