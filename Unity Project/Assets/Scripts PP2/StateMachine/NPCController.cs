@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using static aiControls;
+
 public enum EState
 {
     Idle,
@@ -25,9 +23,6 @@ public class NPCController : MonoBehaviour
 {
     public EDialogueState CurrentDialogueState => currentDialogueState;
 
-    private StateMachine<EState> stateMachine;
-    private EDialogueState currentDialogueState = EDialogueState.Default;
-
     [Header("References")]
     [SerializeField] private PlayerControls playerControls;
     [SerializeField] private Actor actor;
@@ -37,17 +32,27 @@ public class NPCController : MonoBehaviour
     [SerializeField] private Transform playerTransform;
 
     [Header("Settings")]
-    [SerializeField] float interactionDistance;
-    [SerializeField] private float minPunchSpeed;
-    [SerializeField] private float maxPunchSpeed;
-    [SerializeField] private float runCooldown;
+    [SerializeField, Min(0)] private float interactionDistance;
+    [SerializeField, Min(0)] private float minPunchSpeed;
+    [SerializeField, Min(0)] private float maxPunchSpeed;
+    [SerializeField, Min(0)] private float runCooldown;
 
     [Header("Quests")]
-    public CollectApplesQuest appleQuest;
-    public CollectMushroomsQuest mushroomsQuest;
+    [SerializeField] private CollectApplesQuest appleQuest;
+    [SerializeField] private CollectMushroomsQuest mushroomsQuest;
 
-    private void Start()
+    private StateMachine<EState> stateMachine;
+    private EDialogueState currentDialogueState = EDialogueState.Default;
+
+    private void Awake()
     {
+        ValidationUtility.ValidateReference(playerControls, nameof(playerControls));
+        ValidationUtility.ValidateReference(actor, nameof(actor));
+        ValidationUtility.ValidateReference(npcAnimator, nameof(npcAnimator));
+        ValidationUtility.ValidateReference(npcTransform, nameof(npcTransform));
+        ValidationUtility.ValidateReference(npcAgent, nameof(npcAgent));
+        ValidationUtility.ValidateReference(playerTransform, nameof(playerTransform));
+
         stateMachine = new StateMachine<EState>();
 
         //Register States
@@ -57,9 +62,17 @@ public class NPCController : MonoBehaviour
 
         stateMachine.SetState(EState.Idle);
 
-        if(playerControls != null)
+        if (playerControls != null)
         {
-            playerControls.OnSteal += SetState;
+            playerControls.OnStealEvent += HandleStealEvent;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (playerControls != null)
+        {
+            playerControls.OnStealEvent -= HandleStealEvent;
         }
     }
 
@@ -145,13 +158,18 @@ public class NPCController : MonoBehaviour
         }
     }
 
-        public void OnPunchHit(Collider other)
+    public void OnPunchHit(Collider other)
     {
 
         Vector3 knockbackDirection = (playerControls.transform.position - transform.position).normalized;
-        if(playerControls != null)
+        if (playerControls != null)
         {
             playerControls.ApplyKnockback(knockbackDirection);
         }
+    }
+
+    private void HandleStealEvent(EState state)
+    {
+        SetState(state);
     }
 }
