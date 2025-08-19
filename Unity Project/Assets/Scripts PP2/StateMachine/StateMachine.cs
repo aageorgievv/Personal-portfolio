@@ -33,6 +33,7 @@ public class StateMachine<TStateID> where TStateID : Enum
 
         CurrentState = state;
         CurrentState.OnStarted();
+        Debug.Log($"State {state} is set");
     }
 
     public void Update()

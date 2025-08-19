@@ -1662,7 +1662,7 @@ MonoBehaviour:
   lookXLimit: 65
   knockbackForce: 5
   isMoving: 0
-  rayCastInteractionDistance: 1.5
+  rayCastInteractionDistance: 3
 --- !u!54 &427956636
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2293,7 +2293,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   tagFilterName: Player
-  aiControls: {fileID: 781867615}
+  npcController: {fileID: 781867626}
 --- !u!1001 &603240297
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3573,9 +3573,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08c9d4d76e97cc14eb13c53be758b61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTransform: {fileID: 427956634}
+  playerControls: {fileID: 427956635}
   actor: {fileID: 781867616}
+  npcAnimator: {fileID: 781867617}
+  npcTransform: {fileID: 781867624}
+  npcAgent: {fileID: 781867623}
+  playerTransform: {fileID: 427956634}
   interactionDistance: 3
+  minPunchSpeed: 0.5
+  maxPunchSpeed: 1.5
+  runCooldown: 5
   appleQuest: {fileID: 1581625443}
   mushroomsQuest: {fileID: 1056484367}
 --- !u!1 &788855287
@@ -6515,7 +6522,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   tagFilterName: Player
-  aiControls: {fileID: 781867615}
+  npcController: {fileID: 781867626}
 --- !u!1001 &1476954576
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7009,7 +7016,7 @@ MonoBehaviour:
   dialogueAnimator: {fileID: 664840092}
   icon: {fileID: 4775706}
   textSpeed: 0.0001
-  npcController: {fileID: 0}
+  npcController: {fileID: 781867626}
 --- !u!4 &1579120710
 Transform:
   m_ObjectHideFlags: 0

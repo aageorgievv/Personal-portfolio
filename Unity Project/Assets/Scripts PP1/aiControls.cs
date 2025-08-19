@@ -215,8 +215,8 @@ public class aiControls : MonoBehaviour
             agent.SetDestination(playerTransform.position);
 
             
-            Vector3 aiToPlayer = (playerTransform.position - transform.position).normalized;
             // Rotate towards the player
+            Vector3 aiToPlayer = (playerTransform.position - transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(aiToPlayer);
             Quaternion targetRotation = Quaternion.Euler(0, lookRotation.eulerAngles.y, 0);
 

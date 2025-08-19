@@ -23,7 +23,18 @@ public class TalkState : State
 
     public override void OnUpdate()
     {
-        if(Vector3.Distance(npcController.transform.position, playerTransform.position) < interactionDistance)
+        LookTowardsPlayer();
+    }
+
+    public override void OnStopped()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    private void LookTowardsPlayer()
+    {
+        if (Vector3.Distance(npcController.transform.position, playerTransform.position) > interactionDistance)
         {
             npcController.SetState(EState.Idle);
             return;
@@ -34,11 +45,5 @@ public class TalkState : State
         Quaternion targetRotation = Quaternion.Euler(0, lookRotation.eulerAngles.y, 0);
 
         npcController.transform.rotation = Quaternion.Slerp(npcController.transform.rotation, targetRotation, Time.deltaTime * 5f);
-    }
-
-    public override void OnStopped()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 }

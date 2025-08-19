@@ -11,7 +11,7 @@ public class Trigger : MonoBehaviour
 
     [SerializeField] string tagFilterName;
 
-    public aiControls aiControls;
+    public NPCController npcController;
 
 
     private void OnTriggerEnter(Collider other)
@@ -43,6 +43,6 @@ public class Trigger : MonoBehaviour
 
     public void KnockBack(Collider other)
     {
-        aiControls.OnPunchHit(other);
+        npcController.OnPunchHit(other);
     }
 }

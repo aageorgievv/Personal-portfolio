@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -30,7 +31,9 @@ public class PlayerControls : MonoBehaviour
 
     //PP2 ---------------------
 
-    [SerializeField] private float rayCastInteractionDistance = 1.5f;
+    public Action<EState> OnSteal;
+
+    [SerializeField] private float rayCastInteractionDistance = 3f;
 
 
 
@@ -48,6 +51,7 @@ public class PlayerControls : MonoBehaviour
         Look();
         PickUpItem();
         ResetScene();
+        InterractWithNPC();
     }
 
     private void Look()
@@ -115,7 +119,7 @@ public class PlayerControls : MonoBehaviour
                 if (hit.transform.CompareTag("Anvil"))
                 {
                     StartCoroutine(PickUpAnimation(hit.transform));
-                    aiControls.IsFighting();
+                    OnSteal?.Invoke(EState.Fight);
                 }
             }
         }
