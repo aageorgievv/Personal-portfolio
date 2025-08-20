@@ -72,9 +72,10 @@ public class NPCController : MonoBehaviour
             playerControls.OnStealEvent += HandleStealEvent;
         }
 
+        GameManager.ExecuteWhenInitialized(HandleGameManagerInitialized);
     }
 
-    private void Start()
+    private void HandleGameManagerInitialized()
     {
         dialogueManager = GameManager.GetManager<DialogueManager>();
         ValidationUtility.ValidateReference(dialogueManager, nameof(dialogueManager));
@@ -86,6 +87,11 @@ public class NPCController : MonoBehaviour
         if (playerControls != null)
         {
             playerControls.OnStealEvent -= HandleStealEvent;
+        }
+
+        if(dialogueManager != null)
+        {
+            dialogueManager.OnDialogueStateEvent -= HandleDialogueResult;
         }
     }
 

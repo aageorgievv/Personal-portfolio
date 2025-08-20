@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Actor : MonoBehaviour
 {
-    public Action<string, DialogueNode> OnDialogueStartedEvent;
+    public event Action<string, DialogueNode> OnDialogueStartedEvent;
 
     [Header("Dialogue")]
     [SerializeField] private string Name;
@@ -15,7 +15,13 @@ public class Actor : MonoBehaviour
     [SerializeField] private Dialogue AppleQuestNotCompleted;
     [SerializeField] private Dialogue MushroomQuestNotCompleted;
 
-    // Trigger dialogue for this actor
+
+    private void Awake()
+    {
+        //Fix validation
+    }
+
+    // Fix references
     public void StartQuestDialogue()
     {
         OnDialogueStartedEvent?.Invoke(Name, QuestDialogue.RootNode);

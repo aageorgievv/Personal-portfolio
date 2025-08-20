@@ -26,14 +26,32 @@ public class UIManager : MonoBehaviour, IManager
 
     private const string isOpenKey = "IsOpen";
 
-    private void Start()
+    private readonly Dictionary<string, string> promptsByTag = new Dictionary<string, string>();
+
+    private void Awake()
+    {
+        promptsByTag.Add("NPC", "Interact");
+        promptsByTag.Add("Anvil", "Steal");
+        promptsByTag.Add("Apple", "Pick Up");
+        promptsByTag.Add("Mushroom", "Pick Up");
+
+        GameManager.ExecuteWhenInitialized(HandleGameManagerInitialized);
+        HideQuestText();
+    }
+
+    private void HandleGameManagerInitialized()
     {
         dialogueManager = GameManager.GetManager<DialogueManager>();
         ValidationUtility.ValidateReference(dialogueManager, nameof(dialogueManager));
         dialogueManager.OnDialogueStateEvent += HandleDialogueResult;
+    }
 
-        HideQuestText();
-
+    private void OnDestroy()
+    {
+        if(dialogueManager !=  null)
+        {
+            dialogueManager.OnDialogueStateEvent -= HandleDialogueResult;
+        }
     }
 
     private void Update()
@@ -64,26 +82,6 @@ public class UIManager : MonoBehaviour, IManager
     public void GenerateQuestText()
     {
         DialogueManager dialogueManager = GameManager.GetManager<DialogueManager>();
-/*
-        if ((dialogueManager.IsAppleQuest() || dialogueManager.IsAppleQuestBargained()) && CollectApplesQuest.collectedApples < 12)
-        {
-            ShowQuestText($"Apples: {CollectApplesQuest.collectedApples}/12");
-        }
-        else if ((dialogueManager.IsAppleQuest() || dialogueManager.IsAppleQuestBargained()) && CollectApplesQuest.collectedApples >= 12)
-        {
-            questText.color = Color.green;
-            ShowQuestText($"Apples: {CollectApplesQuest.collectedApples}/12");
-        }
-
-        if ((dialogueManager.IsMushroomQuest() || dialogueManager.IsMushroomQuestBargained()) && CollectMushroomsQuest.collectedMushrooms < 8)
-        {
-            ShowQuestText($"Mushrooms: {CollectMushroomsQuest.collectedMushrooms}/8");
-        }
-        else if ((dialogueManager.IsMushroomQuest() || dialogueManager.IsMushroomQuestBargained()) && CollectMushroomsQuest.collectedMushrooms >= 8)
-        {
-            questText.color = Color.green;
-            ShowQuestText($"Mushrooms: {CollectMushroomsQuest.collectedMushrooms}/8");
-        }*/
 
         if (dialogueManager == null) return;
 
@@ -107,27 +105,13 @@ public class UIManager : MonoBehaviour, IManager
         // Perform the raycast
         if (Physics.Raycast(ray, out hit, maxInteractionDistance))
         {
-            // Check the tag of the hit object and update the UI accordingly
-            if (hit.collider.CompareTag("NPC"))
-            {
-                ShowPrompt("Interact");
-            }
-            else if (hit.collider.CompareTag("Anvil"))
-            {
-                ShowPrompt("Steal");
-            }
-            else if (hit.collider.CompareTag("Apple"))
-            {
-                ShowPrompt("Pick Up");
-            }
-            else if (hit.collider.CompareTag("Mushroom"))
-            {
-                ShowPrompt("Pick Up");
-            }
-            else
+            if (!promptsByTag.TryGetValue(hit.collider.tag, out string prompt))
             {
                 HidePrompt();
+                return;
             }
+
+            ShowPrompt(prompt);
         }
         else
         {

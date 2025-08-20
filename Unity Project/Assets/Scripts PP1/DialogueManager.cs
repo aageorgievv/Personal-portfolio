@@ -1,15 +1,13 @@
-using System.Threading;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static aiControls;
 using System;
 
 
 public class DialogueManager : MonoBehaviour, IManager
 {
-    public Action<EDialogueState> OnDialogueStateEvent;
+    public event Action<EDialogueState> OnDialogueStateEvent;
 
     [Header("References")]
     [SerializeField] private Actor actor;
@@ -23,7 +21,7 @@ public class DialogueManager : MonoBehaviour, IManager
     [SerializeField] private Transform responseButtonContainer;
 
     [Header("Settings")]
-    [SerializeField] float textSpeed;
+    [SerializeField, Min(0)] float textSpeed;
 
     private EDialogueResult currentDialogueResult = EDialogueResult.None;
 
