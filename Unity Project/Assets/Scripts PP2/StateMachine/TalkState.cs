@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,8 +11,9 @@ public class TalkState : State
 
     public TalkState(NPCController npcController, Transform playerTransform, float interactionDistance)
     {
-        this.npcController = npcController;
-        this.playerTransform = playerTransform;
+        this.npcController = npcController != null ? npcController : throw new ArgumentNullException(nameof(npcController));
+        this.playerTransform = playerTransform != null ? playerTransform : throw new ArgumentNullException(nameof(playerTransform));
+
         this.interactionDistance = interactionDistance;
     }
 
