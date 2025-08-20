@@ -12,7 +12,7 @@ public class UIManager : MonoBehaviour, IManager
     [SerializeField] private CollectMushroomsQuest CollectMushroomsQuest;
     [SerializeField] private Camera playerCamera;
 
-    [Header("UI")]
+    [Header("UI References")]
     [SerializeField] private TextMeshProUGUI questText;
     [SerializeField] private RawImage prompt;
     [SerializeField] private TextMeshProUGUI interactionText;
@@ -20,14 +20,23 @@ public class UIManager : MonoBehaviour, IManager
     [Header("Settings")]
     [SerializeField] private float maxInteractionDistance = 3f;
 
+    private DialogueManager dialogueManager;
+
     private bool isQuestTabOpen = false;
 
-    void Start()
+    private const string isOpenKey = "IsOpen";
+
+    private void Start()
     {
+        dialogueManager = GameManager.GetManager<DialogueManager>();
+        ValidationUtility.ValidateReference(dialogueManager, nameof(dialogueManager));
+        dialogueManager.OnDialogueStateEvent += HandleDialogueResult;
+
         HideQuestText();
+
     }
 
-    void Update()
+    private void Update()
     {
         ToggleQuestUI();
         GenerateQuestText();
@@ -40,13 +49,13 @@ public class UIManager : MonoBehaviour, IManager
         {
             if (isQuestTabOpen == false)
             {
-                questAnimator.SetBool("IsOpen", true);
+                questAnimator.SetBool(isOpenKey, true);
                 isQuestTabOpen = true;
 
             }
             else if (isQuestTabOpen == true)
             {
-                questAnimator.SetBool("IsOpen", false);
+                questAnimator.SetBool(isOpenKey, false);
                 isQuestTabOpen = false;
             }
         }
@@ -55,7 +64,7 @@ public class UIManager : MonoBehaviour, IManager
     public void GenerateQuestText()
     {
         DialogueManager dialogueManager = GameManager.GetManager<DialogueManager>();
-
+/*
         if ((dialogueManager.IsAppleQuest() || dialogueManager.IsAppleQuestBargained()) && CollectApplesQuest.collectedApples < 12)
         {
             ShowQuestText($"Apples: {CollectApplesQuest.collectedApples}/12");
@@ -74,6 +83,18 @@ public class UIManager : MonoBehaviour, IManager
         {
             questText.color = Color.green;
             ShowQuestText($"Mushrooms: {CollectMushroomsQuest.collectedMushrooms}/8");
+        }*/
+
+        if (dialogueManager == null) return;
+
+        if (dialogueManager.IsAppleQuest() || dialogueManager.IsAppleQuestBargained())
+        {
+            UpdateQuestText("Apples", CollectApplesQuest.collectedApples, 12);
+        }
+
+        if (dialogueManager.IsMushroomQuest() || dialogueManager.IsMushroomQuestBargained())
+        {
+            UpdateQuestText("Mushrooms", CollectMushroomsQuest.collectedMushrooms, 8);
         }
     }
 
@@ -114,6 +135,12 @@ public class UIManager : MonoBehaviour, IManager
         }
     }
 
+    private void UpdateQuestText(string itemName, int collected, int target)
+    {
+        questText.color = collected >= target ? Color.green : Color.white;
+        ShowQuestText($"{itemName}: {collected}/{target}");
+    }
+
     private void ShowQuestText(string text)
     {
         questText.text = text;
@@ -134,5 +161,10 @@ public class UIManager : MonoBehaviour, IManager
     private void HidePrompt()
     {
         prompt.gameObject.SetActive(false);
+    }
+
+    private void HandleDialogueResult(EDialogueState result)
+    {
+        GenerateQuestText();
     }
 }

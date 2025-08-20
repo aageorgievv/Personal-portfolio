@@ -1,52 +1,53 @@
+using System;
 using UnityEngine;
 
 public class Actor : MonoBehaviour
 {
-    public string Name;
-    public Dialogue QuestDialogue;
-    public Dialogue DialogueAppleQuestCompleted;
-    public Dialogue DialogueAppleQuestCompletedBargained;
-    public Dialogue DialogueMushroomQuestCompleted;
-    public Dialogue DialogueMushroomQuestCompletedBargained;
-    public Dialogue AppleQuestNotCompleted;
-    public Dialogue MushroomQuestNotCompleted;
+    public Action<string, DialogueNode> OnDialogueStartedEvent;
 
-    private void Update()
-    {
-    }
+    [Header("Dialogue")]
+    [SerializeField] private string Name;
+    [SerializeField] private Dialogue QuestDialogue;
+    [SerializeField] private Dialogue DialogueAppleQuestCompleted;
+    [SerializeField] private Dialogue DialogueAppleQuestCompletedBargained;
+    [SerializeField] private Dialogue DialogueMushroomQuestCompleted;
+    [SerializeField] private Dialogue DialogueMushroomQuestCompletedBargained;
+    [SerializeField] private Dialogue AppleQuestNotCompleted;
+    [SerializeField] private Dialogue MushroomQuestNotCompleted;
 
     // Trigger dialogue for this actor
     public void StartQuestDialogue()
     {
-        DialogueManager.Instance.StartDialogue(Name, QuestDialogue.RootNode);
+        OnDialogueStartedEvent?.Invoke(Name, QuestDialogue.RootNode);
     }
 
     public void StartAppleQuestCompleted()
     {
-        DialogueManager.Instance.StartDialogue(Name, DialogueAppleQuestCompleted.RootNode);
+        OnDialogueStartedEvent?.Invoke(Name, DialogueAppleQuestCompleted.RootNode);
     }
 
     public void StartAppleQuestCompletedBargained()
     {
-        DialogueManager.Instance.StartDialogue(Name, DialogueAppleQuestCompletedBargained.RootNode);
+        OnDialogueStartedEvent?.Invoke(Name, DialogueAppleQuestCompletedBargained.RootNode);
+
     }
 
     public void StartMushroomQuestCompleted()
     {
-        DialogueManager.Instance.StartDialogue(Name, DialogueMushroomQuestCompleted.RootNode);
+        OnDialogueStartedEvent?.Invoke(Name, DialogueMushroomQuestCompleted.RootNode);
     }
 
     public void StartMushroomQuestCompletedBargained()
     {
-        DialogueManager.Instance.StartDialogue(Name, DialogueMushroomQuestCompletedBargained.RootNode);
+        OnDialogueStartedEvent?.Invoke(Name, DialogueMushroomQuestCompletedBargained.RootNode);
     }
 
     public void StartAppleQuestNotCompleted()
     {
-        DialogueManager.Instance.StartDialogue(Name, AppleQuestNotCompleted.RootNode);
+        OnDialogueStartedEvent?.Invoke(Name, AppleQuestNotCompleted.RootNode);
     }
     public void StartMushroomQuestNotCompleted()
     {
-        DialogueManager.Instance.StartDialogue(Name, MushroomQuestNotCompleted.RootNode);
+        OnDialogueStartedEvent?.Invoke(Name, MushroomQuestNotCompleted.RootNode);
     }
 }

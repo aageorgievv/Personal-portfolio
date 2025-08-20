@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using static aiControls;
 
 public enum EState
 {
@@ -30,6 +31,7 @@ public class NPCController : MonoBehaviour
     [SerializeField] private Transform npcTransform;
     [SerializeField] private NavMeshAgent npcAgent;
     [SerializeField] private Transform playerTransform;
+    [SerializeField] private GameObject questMark;
 
     [Header("Settings")]
     [SerializeField, Min(0)] private float interactionDistance;
@@ -41,7 +43,10 @@ public class NPCController : MonoBehaviour
     [SerializeField] private CollectApplesQuest appleQuest;
     [SerializeField] private CollectMushroomsQuest mushroomsQuest;
 
+    private DialogueManager dialogueManager;
+
     private StateMachine<EState> stateMachine;
+
     private EDialogueState currentDialogueState = EDialogueState.Default;
 
     private void Awake()
@@ -66,6 +71,14 @@ public class NPCController : MonoBehaviour
         {
             playerControls.OnStealEvent += HandleStealEvent;
         }
+
+    }
+
+    private void Start()
+    {
+        dialogueManager = GameManager.GetManager<DialogueManager>();
+        ValidationUtility.ValidateReference(dialogueManager, nameof(dialogueManager));
+        dialogueManager.OnDialogueStateEvent += HandleDialogueResult;
     }
 
     private void OnDestroy()
@@ -171,5 +184,11 @@ public class NPCController : MonoBehaviour
     private void HandleStealEvent(EState state)
     {
         SetState(state);
+    }
+
+    private void HandleDialogueResult(EDialogueState state)
+    {
+        SetDialogueState(state);
+        questMark.SetActive(false);
     }
 }

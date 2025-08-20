@@ -1692,13 +1692,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   questAnimator: {fileID: 1615377391}
-  dialogueManager: {fileID: 1579120709}
   CollectApplesQuest: {fileID: 1581625443}
   CollectMushroomsQuest: {fileID: 1056484367}
+  playerCamera: {fileID: 963194227}
   questText: {fileID: 1344981967}
   prompt: {fileID: 775153995}
   interactionText: {fileID: 258414986}
-  playerCamera: {fileID: 963194227}
   maxInteractionDistance: 3
 --- !u!4 &446781467 stripped
 Transform:
@@ -3380,6 +3379,7 @@ MonoBehaviour:
   npcTransform: {fileID: 781867624}
   npcAgent: {fileID: 781867623}
   playerTransform: {fileID: 427956634}
+  questMark: {fileID: 4775706}
   interactionDistance: 3
   minPunchSpeed: 0.5
   maxPunchSpeed: 1.5
@@ -5057,7 +5057,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d12d756d0bbb0ef49897ecb81cb59ac0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueManager: {fileID: 0}
+  dialogueManager: {fileID: 1579120709}
+  uiManager: {fileID: 436810162}
 --- !u!1001 &1214437448
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6571,7 +6572,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1549563453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6700,17 +6701,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad5ca117022c5914f8703985e5a401cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actor: {fileID: 781867616}
+  dialogueAnimator: {fileID: 664840092}
+  npcController: {fileID: 781867626}
   DialogueBox: {fileID: 664840088}
   DialogTitleText: {fileID: 1023418330}
   DialogBodyText: {fileID: 2035928291}
   responseButtonPrefab: {fileID: 7608367955537598330, guid: 20ec4cedbf5cda1459b349265e2936c3, type: 3}
   responseButtonContainer: {fileID: 1113414337}
-  aiControls: {fileID: 781867615}
-  questUIManager: {fileID: 1549563453}
-  dialogueAnimator: {fileID: 664840092}
-  icon: {fileID: 4775706}
   textSpeed: 0.0001
-  npcController: {fileID: 781867626}
 --- !u!4 &1579120710
 Transform:
   m_ObjectHideFlags: 0
@@ -7913,7 +7912,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1858508410
 MonoBehaviour:
   m_ObjectHideFlags: 0
