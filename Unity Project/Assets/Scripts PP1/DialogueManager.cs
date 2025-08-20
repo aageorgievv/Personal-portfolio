@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using static aiControls;
 
 
-public class DialogueManager : MonoBehaviour
+public class DialogueManager : MonoBehaviour, IManager
 {
     public static DialogueManager Instance { get; private set; }
 
