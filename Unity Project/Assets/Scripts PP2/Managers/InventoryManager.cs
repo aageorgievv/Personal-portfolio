@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class InventoryManager : MonoBehaviour
+public class InventoryManager : MonoBehaviour, IManager
 {
     public void StackInInventory(UISlotHandler currentSlot, Item item)
     {

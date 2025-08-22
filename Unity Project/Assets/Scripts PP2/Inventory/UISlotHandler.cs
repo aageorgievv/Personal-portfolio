@@ -5,10 +5,25 @@ using UnityEngine.UI;
 
 public class UISlotHandler : MonoBehaviour, IPointerClickHandler
 {
+
+
     public Item item;
     public Image icon;
     public TMP_Text itemCountText;
     public InventoryManager inventoryManager;
+
+    private MouseManager mouseManager;
+
+    private void Awake()
+    {
+        GameManager.ExecuteWhenInitialized(HandleGameManagerInitialized);
+    }
+
+    private void HandleGameManagerInitialized()
+    {
+        mouseManager = GameManager.GetManager<MouseManager>();
+        ValidationUtility.ValidateReference(mouseManager, nameof(mouseManager));
+    }
 
     private void Start()
     {
@@ -17,7 +32,8 @@ public class UISlotHandler : MonoBehaviour, IPointerClickHandler
             item = item.Clone();
             icon.sprite = item.itemIcon;
             itemCountText.text = item.itemCount.ToString();
-        } else
+        }
+        else
         {
             icon.gameObject.SetActive(false);
             itemCountText.text = string.Empty;
@@ -25,17 +41,16 @@ public class UISlotHandler : MonoBehaviour, IPointerClickHandler
     }
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(eventData.button == PointerEventData.InputButton.Right)
+        if (eventData.button == PointerEventData.InputButton.Right)
         {
-            if(item == null)
+            if (item == null)
             {
                 return;
             }
 
-            MouseManager.instance.PickUpFromStack(this);
+            mouseManager.PickUpFromStack(this);
             return;
         }
-
-        MouseManager.instance.UpdateHeldItem(this);
+        mouseManager.UpdateHeldItem(this);
     }
 }

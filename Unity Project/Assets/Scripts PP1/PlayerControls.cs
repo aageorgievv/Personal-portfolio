@@ -33,10 +33,10 @@ public class PlayerControls : MonoBehaviour
 
     public Action<EState> OnStealEvent;
 
+    [SerializeField] private GameObject inventory;
     [SerializeField] private float rayCastInteractionDistance = 3f;
 
-
-
+    private bool isInventoryOpen = false;
     //-------------------------
     void Start()
     {
@@ -52,6 +52,11 @@ public class PlayerControls : MonoBehaviour
         PickUpItem();
         ResetScene();
         InterractWithNPC();
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            ToggleInventory();
+        }
     }
 
     private void Look()
@@ -173,19 +178,36 @@ public class PlayerControls : MonoBehaviour
     //Later maybe replace the input with the new Input system
     private void InterractWithNPC()
     {
-        if(Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
 
-            if(Physics.Raycast(ray, out RaycastHit hit, rayCastInteractionDistance))
+            if (Physics.Raycast(ray, out RaycastHit hit, rayCastInteractionDistance))
             {
                 NPCController npc = hit.collider.GetComponent<NPCController>();
 
-                if(npc != null)
+                if (npc != null)
                 {
                     npc.TryTalk();
                 }
             }
+        }
+    }
+
+    private void ToggleInventory()
+    {
+        isInventoryOpen = !isInventoryOpen;
+        inventory.SetActive(isInventoryOpen);
+
+        if (isInventoryOpen)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
 }

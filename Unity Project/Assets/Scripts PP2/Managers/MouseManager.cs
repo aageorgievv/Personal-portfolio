@@ -1,15 +1,9 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class MouseManager : MonoBehaviour
+public class MouseManager : MonoBehaviour, IManager
 {
-    public static MouseManager instance;
     public Item currentlyHeldItem;
-
-    private void Awake()
-    {
-        instance = this;
-    }
 
     public void UpdateHeldItem(UISlotHandler currentSlot)
     {
@@ -37,6 +31,11 @@ public class MouseManager : MonoBehaviour
 
     public void PickUpFromStack(UISlotHandler currentSlot)
     {
+        if(currentSlot.item == null)
+        {
+            return;
+        }
+
         if(currentlyHeldItem != null && currentlyHeldItem.itemId != currentSlot.item.itemId)
         {
             return;
@@ -46,15 +45,15 @@ public class MouseManager : MonoBehaviour
         {
             currentlyHeldItem = currentSlot.item.Clone();
             currentlyHeldItem.itemCount = 0;
+        }
 
-            currentlyHeldItem.itemCount++;
-            currentSlot.item.itemCount--;
-            currentSlot.itemCountText.text = currentSlot.item.itemCount.ToString();
+        currentlyHeldItem.itemCount++;
+        currentSlot.item.itemCount--;
+        currentSlot.itemCountText.text = currentSlot.item.itemCount.ToString();
 
-            if(currentSlot.item.itemCount <= 0)
-            {
-                currentSlot.inventoryManager.ClearItemSlot(currentSlot);
-            }
+        if (currentSlot.item.itemCount <= 0)
+        {
+            currentSlot.inventoryManager.ClearItemSlot(currentSlot);
         }
     }
 }

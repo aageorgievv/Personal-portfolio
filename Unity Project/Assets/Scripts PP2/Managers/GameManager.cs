@@ -7,6 +7,10 @@ public class GameManager : MonoBehaviour, IManager
     [Header("References")]
     [SerializeField] private DialogueManager dialogueManager;
     [SerializeField] private UIManager uiManager;
+    [SerializeField] private InventoryManager inventoryManager;
+    [SerializeField] private MouseManager mouseManager;
+    [SerializeField] private MoneyManager moneyManager;
+
 
     private static Dictionary<Type, IManager> managers = new Dictionary<Type, IManager>();
 
@@ -17,11 +21,18 @@ public class GameManager : MonoBehaviour, IManager
     {
         ValidationUtility.ValidateReference(dialogueManager, nameof(dialogueManager));
         ValidationUtility.ValidateReference(uiManager, nameof(uiManager));
+        ValidationUtility.ValidateReference(inventoryManager, nameof(inventoryManager));
+        ValidationUtility.ValidateReference(mouseManager, nameof(mouseManager));
+        ValidationUtility.ValidateReference(moneyManager, nameof(moneyManager));
 
         managers.Clear();
         managers.Add(typeof(GameManager), this);
         managers.Add(typeof(DialogueManager), dialogueManager);
         managers.Add(typeof(UIManager), uiManager);
+        managers.Add(typeof(InventoryManager), inventoryManager);
+        managers.Add(typeof(MouseManager), mouseManager);
+        managers.Add(typeof(MoneyManager), moneyManager);
+
         isInitialized = true;
         onInitializedCallback?.Invoke();
         onInitializedCallback = null;

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Apple
   m_EditorClassIdentifier: 
   itemId: Apple
-  itemCount: 1
+  itemCount: 5
   itemIcon: {fileID: 21300000, guid: 73482e996fe1c354195b53e6b6779316, type: 3}
