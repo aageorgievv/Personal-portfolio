@@ -1,29 +1,41 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MouseManager : MonoBehaviour, IManager
 {
     public Item currentlyHeldItem;
 
+    private InventoryManager inventoryManager;
+
+    private void Awake()
+    {
+        GameManager.ExecuteWhenInitialized(HandleGameManagerInitialized);
+    }
+
+    private void HandleGameManagerInitialized()
+    {
+        inventoryManager = GameManager.GetManager<InventoryManager>();
+        ValidationUtility.ValidateReference(inventoryManager, nameof(inventoryManager));
+    }
+
     public void UpdateHeldItem(UISlotHandler currentSlot)
     {
         Item currentActiveItem = currentSlot.item;
 
-        if(currentlyHeldItem != null && currentActiveItem != null && currentlyHeldItem.itemId == currentActiveItem.itemId)
+        if (currentlyHeldItem != null && currentActiveItem != null && currentlyHeldItem.itemId == currentActiveItem.itemId)
         {
-            currentSlot.inventoryManager.StackInInventory(currentSlot, currentlyHeldItem);
+            inventoryManager.StackInInventory(currentSlot, currentlyHeldItem);
             currentlyHeldItem = null;
             return;
         }
 
         if(currentSlot.item != null)
         {
-            currentSlot.inventoryManager.ClearItemSlot(currentSlot);
+            inventoryManager.ClearItemSlot(currentSlot);
         }
 
         if(currentlyHeldItem != null)
         {
-            currentSlot.inventoryManager.PlaceInInventory(currentSlot,currentlyHeldItem);
+            inventoryManager.PlaceInInventory(currentSlot,currentlyHeldItem);
         }
 
         currentlyHeldItem = currentActiveItem;
@@ -31,8 +43,7 @@ public class MouseManager : MonoBehaviour, IManager
 
     public void PickUpFromStack(UISlotHandler currentSlot)
     {
-        if(currentSlot.item == null)
-        {
+        if (ValidationUtility.ValidateReference(currentSlot.item, nameof(currentSlot.item))) {
             return;
         }
 
@@ -53,7 +64,7 @@ public class MouseManager : MonoBehaviour, IManager
 
         if (currentSlot.item.itemCount <= 0)
         {
-            currentSlot.inventoryManager.ClearItemSlot(currentSlot);
+            inventoryManager.ClearItemSlot(currentSlot);
         }
     }
 }

@@ -5,12 +5,9 @@ using UnityEngine.UI;
 
 public class UISlotHandler : MonoBehaviour, IPointerClickHandler
 {
-
-
     public Item item;
     public Image icon;
     public TMP_Text itemCountText;
-    public InventoryManager inventoryManager;
 
     private MouseManager mouseManager;
 
@@ -43,7 +40,7 @@ public class UISlotHandler : MonoBehaviour, IPointerClickHandler
     {
         if (eventData.button == PointerEventData.InputButton.Right)
         {
-            if (item == null)
+            if (!ValidationUtility.ValidateReference(item, nameof(item)))
             {
                 return;
             }
