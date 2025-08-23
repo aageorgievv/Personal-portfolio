@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour, IManager
     [Header("References")]
     [SerializeField] private DialogueManager dialogueManager;
     [SerializeField] private UIManager uiManager;
-    [SerializeField] private InventoryManager inventoryManager;
+    [SerializeField] private Inventory inventoryManager;
     [SerializeField] private MouseManager mouseManager;
     [SerializeField] private MoneyManager moneyManager;
 
@@ -29,7 +29,6 @@ public class GameManager : MonoBehaviour, IManager
         managers.Add(typeof(GameManager), this);
         managers.Add(typeof(DialogueManager), dialogueManager);
         managers.Add(typeof(UIManager), uiManager);
-        managers.Add(typeof(InventoryManager), inventoryManager);
         managers.Add(typeof(MouseManager), mouseManager);
         managers.Add(typeof(MoneyManager), moneyManager);
 

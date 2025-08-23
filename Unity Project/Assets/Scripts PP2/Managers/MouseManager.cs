@@ -4,17 +4,12 @@ public class MouseManager : MonoBehaviour, IManager
 {
     public Item currentlyHeldItem;
 
-    private InventoryManager inventoryManager;
+    [SerializeField]
+    private Inventory playerInventoryManager;
 
     private void Awake()
     {
-        GameManager.ExecuteWhenInitialized(HandleGameManagerInitialized);
-    }
-
-    private void HandleGameManagerInitialized()
-    {
-        inventoryManager = GameManager.GetManager<InventoryManager>();
-        ValidationUtility.ValidateReference(inventoryManager, nameof(inventoryManager));
+        ValidationUtility.ValidateReference(playerInventoryManager, nameof(playerInventoryManager));
     }
 
     public void UpdateHeldItem(UISlotHandler currentSlot)
@@ -23,19 +18,19 @@ public class MouseManager : MonoBehaviour, IManager
 
         if (currentlyHeldItem != null && currentActiveItem != null && currentlyHeldItem.itemId == currentActiveItem.itemId)
         {
-            inventoryManager.StackInInventory(currentSlot, currentlyHeldItem);
+            playerInventoryManager.StackInInventory(currentSlot, currentlyHeldItem);
             currentlyHeldItem = null;
             return;
         }
 
         if(currentSlot.item != null)
         {
-            inventoryManager.ClearItemSlot(currentSlot);
+            playerInventoryManager.ClearItemSlot(currentSlot);
         }
 
         if(currentlyHeldItem != null)
         {
-            inventoryManager.PlaceInInventory(currentSlot,currentlyHeldItem);
+            playerInventoryManager.PlaceInInventory(currentSlot,currentlyHeldItem);
         }
 
         currentlyHeldItem = currentActiveItem;
@@ -64,7 +59,7 @@ public class MouseManager : MonoBehaviour, IManager
 
         if (currentSlot.item.itemCount <= 0)
         {
-            inventoryManager.ClearItemSlot(currentSlot);
+            playerInventoryManager.ClearItemSlot(currentSlot);
         }
     }
 }
