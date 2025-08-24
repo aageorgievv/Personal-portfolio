@@ -1,12 +1,4 @@
-using UnityEngine;
-
-[CreateAssetMenu(fileName = "Item", menuName = "ScriptableObjects/Item")]
-public class Item : ScriptableObject
-{
-    public string itemId;
-    public int itemCount;
-    public Sprite itemIcon;
-}
+﻿using UnityEngine;
 
 public static class ScriptableObjectExtention
 {

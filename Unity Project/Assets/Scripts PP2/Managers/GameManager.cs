@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour, IManager
     [Header("References")]
     [SerializeField] private DialogueManager dialogueManager;
     [SerializeField] private UIManager uiManager;
-    [SerializeField] private Inventory inventoryManager;
+    [SerializeField] private InventoryOld inventoryManager;
     [SerializeField] private MouseManager mouseManager;
     [SerializeField] private MoneyManager moneyManager;
 

@@ -1,0 +1,26 @@
+using UnityEngine;
+
+public class InventoryOld : MonoBehaviour
+{
+    public void StackInInventory(UISlotHandler currentSlot, ItemData item)
+    {
+        //currentSlot.item.itemCount += item.itemCount;
+        //currentSlot.itemCountText.text = currentSlot.item.itemCount.ToString();
+    }
+
+    public void PlaceInInventory(UISlotHandler currentSlot, ItemData item)
+    {
+        currentSlot.item = item;
+        currentSlot.icon.sprite = item.itemSprite;
+        //currentSlot.itemCountText.text = item.itemCount.ToString();
+        currentSlot.icon.gameObject.SetActive(true);
+    }
+
+    public void ClearItemSlot(UISlotHandler currentSlot)
+    {
+        currentSlot.item = null;
+        currentSlot.icon.sprite = null;
+        currentSlot.itemCountText.text = string.Empty;
+        currentSlot.icon.gameObject.SetActive(false);
+    }
+}
