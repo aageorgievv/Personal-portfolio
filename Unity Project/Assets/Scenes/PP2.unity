@@ -1032,7 +1032,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   infiniteMoney: 0
-  money: 500
+  money: 100
 --- !u!1 &311502848 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1733350709616557346, guid: 4d027cd71b53a234aa91cb080bbc60c2, type: 3}
@@ -5162,7 +5162,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueManager: {fileID: 1579120709}
   uiManager: {fileID: 436810162}
-  inventoryManager: {fileID: 0}
   mouseManager: {fileID: 925606591}
   moneyManager: {fileID: 311349470}
 --- !u!1001 &1214437448
@@ -5464,7 +5463,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1263783667
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7530,6 +7529,17 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4087520850070706273, guid: dd6a351acc2491446a00759faf0ee278, type: 3}
+--- !u!114 &1677781980 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4164837896672857881, guid: eab65026073fad74da87899f4a4dcf6f, type: 3}
+  m_PrefabInstance: {fileID: 6133321059995471052}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1710308814
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7663,6 +7673,14 @@ PrefabInstance:
     - target: {fileID: 3006329280526751081, guid: 85f243fb680bbb64490440f1916b3862, type: 3}
       propertyPath: m_Name
       value: Inventory
+      objectReference: {fileID: 0}
+    - target: {fileID: 3006329280526751081, guid: 85f243fb680bbb64490440f1916b3862, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3388165831669313683, guid: 85f243fb680bbb64490440f1916b3862, type: 3}
+      propertyPath: numSlots
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 3388165831669313683, guid: 85f243fb680bbb64490440f1916b3862, type: 3}
       propertyPath: startingItems.Array.size
@@ -8382,6 +8400,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1988025617893250342, guid: c6a512d95615f534cbe31aba1aaa354c, type: 3}
   m_PrefabInstance: {fileID: 728405135}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1894276828 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 20160342702972628, guid: eab65026073fad74da87899f4a4dcf6f, type: 3}
+  m_PrefabInstance: {fileID: 6133321059995471052}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1915999105
 GameObject:
   m_ObjectHideFlags: 0
@@ -9676,9 +9705,29 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6412713347138739618, guid: eab65026073fad74da87899f4a4dcf6f, type: 3}
+      propertyPath: itemCost
+      value: 
+      objectReference: {fileID: 1677781980}
+    - target: {fileID: 6412713347138739618, guid: eab65026073fad74da87899f4a4dcf6f, type: 3}
+      propertyPath: itemName
+      value: 
+      objectReference: {fileID: 1894276828}
+    - target: {fileID: 6412713347138739618, guid: eab65026073fad74da87899f4a4dcf6f, type: 3}
+      propertyPath: nameText
+      value: 
+      objectReference: {fileID: 1894276828}
+    - target: {fileID: 6412713347138739618, guid: eab65026073fad74da87899f4a4dcf6f, type: 3}
+      propertyPath: coinsText
+      value: 
+      objectReference: {fileID: 1677781980}
     - target: {fileID: 7094819193784209192, guid: eab65026073fad74da87899f4a4dcf6f, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8954196120325270809, guid: eab65026073fad74da87899f4a4dcf6f, type: 3}
+      propertyPath: numSlots
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fec75c2d04c797b4fb48502eedebc09f, type: 3}
-  m_Name: Mushroom
+  m_Name: Apple
   m_EditorClassIdentifier: 
-  itemName: Mushroom
-  itemSprite: {fileID: 21300000, guid: 6123ace14d4b9834fb5ef4d177734737, type: 3}
+  itemName: Apple
+  itemSprite: {fileID: 21300000, guid: 73482e996fe1c354195b53e6b6779316, type: 3}
+  cost: 3

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class ShopInventory : Inventory
 {
+    private int maxShopSlots = 8;
+
     protected override InventorySlot FindSlotForItem(Item item)
     {
         if (!ValidationUtility.ValidateReference(item, nameof(item)))
@@ -19,8 +21,24 @@ public class ShopInventory : Inventory
         }
 
         // no free slots were found
-        Debug.LogError($"Inventory is full");
+        Debug.LogError($"ShopInventory is full");
         return null;
+    }
+
+    protected override void SpawnSlots()
+    {
+        for (int i = 0; i < startingItems.Length; i++)
+        {
+            if (i >= maxShopSlots)
+            {
+                continue;
+            }
+
+            InventorySlot slot = Instantiate(slotPrefab);
+            slot.transform.SetParent(slotParent, false);
+            slot.gameObject.SetActive(true);
+            slots.Add(slot);
+        }
     }
 
     protected override void SpawnStartingItems()
@@ -33,7 +51,6 @@ public class ShopInventory : Inventory
             {
                 continue;
             }
-
 
             Item item = startingItem.item.Create();
             AddItem(item);

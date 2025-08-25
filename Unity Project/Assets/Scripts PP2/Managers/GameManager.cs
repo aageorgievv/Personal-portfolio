@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour, IManager
     [Header("References")]
     [SerializeField] private DialogueManager dialogueManager;
     [SerializeField] private UIManager uiManager;
-    [SerializeField] private InventoryOld inventoryManager;
     [SerializeField] private MouseManager mouseManager;
     [SerializeField] private MoneyManager moneyManager;
 
@@ -21,7 +20,6 @@ public class GameManager : MonoBehaviour, IManager
     {
         ValidationUtility.ValidateReference(dialogueManager, nameof(dialogueManager));
         ValidationUtility.ValidateReference(uiManager, nameof(uiManager));
-        ValidationUtility.ValidateReference(inventoryManager, nameof(inventoryManager));
         ValidationUtility.ValidateReference(mouseManager, nameof(mouseManager));
         ValidationUtility.ValidateReference(moneyManager, nameof(moneyManager));
 

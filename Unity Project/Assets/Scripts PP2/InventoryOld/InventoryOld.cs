@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class InventoryOld : MonoBehaviour
 {
-    public void StackInInventory(UISlotHandler currentSlot, ItemData item)
+/*    public void StackInInventory(UISlotHandler currentSlot, ItemData item)
     {
         //currentSlot.item.itemCount += item.itemCount;
         //currentSlot.itemCountText.text = currentSlot.item.itemCount.ToString();
-    }
+    }*/
 
-    public void PlaceInInventory(UISlotHandler currentSlot, ItemData item)
+/*    public void PlaceInInventory(UISlotHandler currentSlot, ItemData item)
     {
         currentSlot.item = item;
         currentSlot.icon.sprite = item.itemSprite;
@@ -22,5 +22,5 @@ public class InventoryOld : MonoBehaviour
         currentSlot.icon.sprite = null;
         currentSlot.itemCountText.text = string.Empty;
         currentSlot.icon.gameObject.SetActive(false);
-    }
+    }*/
 }

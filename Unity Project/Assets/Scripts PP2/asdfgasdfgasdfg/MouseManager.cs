@@ -13,9 +13,12 @@ public class MouseManager : MonoBehaviour, IManager
     private Image heldItemSprite;
 
     private PlayerInventorySlot selectedSlot;
+    private MoneyManager moneyManager;
 
     private void Awake()
     {
+        GameManager.ExecuteWhenInitialized(HandleGameManagerInitialized);
+
         ValidationUtility.ValidateReference(playerInventory, nameof(playerInventory));
         ValidationUtility.ValidateReference(heldItemSprite, nameof(heldItemSprite));
         heldItemSprite.gameObject.SetActive(false);
@@ -26,6 +29,12 @@ public class MouseManager : MonoBehaviour, IManager
         UpdateMouseLeft();
         UpdateMouseRight();
         UpdateItemIcon();
+    }
+
+    private void HandleGameManagerInitialized()
+    {
+        moneyManager = GameManager.GetManager<MoneyManager>();
+        ValidationUtility.ValidateReference(moneyManager, nameof(moneyManager));
     }
 
     private void UpdateMouseLeft()
@@ -112,6 +121,13 @@ public class MouseManager : MonoBehaviour, IManager
     private void HandleRightClickedPlayerSlot(PlayerInventorySlot slot)
     {
         // detect if shop is open, and sell the item, etc
+        if (!slot.HasItem)
+        {
+            return;
+        }
+
+        moneyManager.AddMoney(slot.Item.Cost);
+        slot.RemoveItem();
     }
 
     private void HandleClickedShopSlot(ShopInventorySlot slot)
@@ -122,58 +138,10 @@ public class MouseManager : MonoBehaviour, IManager
         }
 
         // purchase the item
-        playerInventory.AddItem(slot.Item);
-    }
-
-
-    public void UpdateHeldItem(UISlotHandler currentSlot)
-    {
-        //ItemData currentActiveItem = currentSlot.item;
-
-        //if (currentlyHeldItem != null && currentActiveItem != null && currentlyHeldItem.itemName == currentActiveItem.itemName)
-        //{
-        //    playerInventory.StackInInventory(currentSlot, currentlyHeldItem);
-        //    currentlyHeldItem = null;
-        //    return;
-        //}
-
-        //if(currentSlot.item != null)
-        //{
-        //    playerInventory.ClearItemSlot(currentSlot);
-        //}
-
-        //if(currentlyHeldItem != null)
-        //{
-        //    playerInventory.PlaceInInventory(currentSlot,currentlyHeldItem);
-        //}
-
-        //currentlyHeldItem = currentActiveItem;
-    }
-
-    public void PickUpFromStack(UISlotHandler currentSlot)
-    {
-        //if (ValidationUtility.ValidateReference(currentSlot.item, nameof(currentSlot.item))) {
-        //    return;
-        //}
-
-        //if(currentlyHeldItem != null && currentlyHeldItem.itemName != currentSlot.item.itemName)
-        //{
-        //    return;
-        //}
-
-        //if(currentlyHeldItem == null)
-        //{
-        //    currentlyHeldItem = currentSlot.item.Clone();
-        //    currentlyHeldItem.itemCount = 0;
-        //}
-
-        //currentlyHeldItem.itemCount++;
-        //currentSlot.item.itemCount--;
-        //currentSlot.itemCountText.text = currentSlot.item.itemCount.ToString();
-
-        //if (currentSlot.item.itemCount <= 0)
-        //{
-        //    playerInventory.ClearItemSlot(currentSlot);
-        //}
+        if(moneyManager.CanAfford(slot.Item.Cost))
+        {
+            moneyManager.SpendMoney(slot.Item.Cost);
+            playerInventory.AddItem(slot.Item);
+        }
     }
 }

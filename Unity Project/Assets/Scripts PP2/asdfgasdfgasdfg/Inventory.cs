@@ -4,18 +4,14 @@ using UnityEngine;
 
 public abstract class Inventory : MonoBehaviour
 {
-    [SerializeField]
-    private InventorySlot slotPrefab;
+    [SerializeField] protected InventorySlot slotPrefab;
+    [SerializeField] protected Transform slotParent;
+    [SerializeField, Range(0, 18)] private int numSlots = 18;
 
-    [SerializeField]
-    private Transform slotParent;
-
-    [SerializeField, Range(0, 18)]
-    private int numSlots = 18;
-    [SerializeField]
-    protected StartingItem[] startingItems = Array.Empty<StartingItem>();
+    [SerializeField] protected StartingItem[] startingItems = Array.Empty<StartingItem>();
 
     protected readonly List<InventorySlot> slots = new List<InventorySlot>();
+
 
     protected virtual void Awake()
     {
@@ -46,7 +42,7 @@ public abstract class Inventory : MonoBehaviour
 
     protected abstract InventorySlot FindSlotForItem(Item item);
 
-    private void SpawnSlots()
+    protected virtual void SpawnSlots()
     {
         for (int i = 0; i < numSlots; i++)
         {

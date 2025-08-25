@@ -16,11 +16,13 @@ public class UIManager : MonoBehaviour, IManager
     [SerializeField] private TextMeshProUGUI questText;
     [SerializeField] private RawImage prompt;
     [SerializeField] private TextMeshProUGUI interactionText;
+    [SerializeField] private TextMeshProUGUI moneyText;
 
     [Header("Settings")]
     [SerializeField] private float maxInteractionDistance = 3f;
 
     private DialogueManager dialogueManager;
+    private MoneyManager moneyManager;
 
     private bool isQuestTabOpen = false;
 
@@ -42,8 +44,11 @@ public class UIManager : MonoBehaviour, IManager
     private void HandleGameManagerInitialized()
     {
         dialogueManager = GameManager.GetManager<DialogueManager>();
+        moneyManager = GameManager.GetManager<MoneyManager>();
         ValidationUtility.ValidateReference(dialogueManager, nameof(dialogueManager));
+        ValidationUtility.ValidateReference(moneyManager, nameof(moneyManager));
         dialogueManager.OnDialogueStateEvent += HandleDialogueResult;
+        moneyManager.OnMoneyChanged += HandleUpdatingMoneyText;
     }
 
     private void OnDestroy()
@@ -117,6 +122,11 @@ public class UIManager : MonoBehaviour, IManager
         {
             HidePrompt();
         }
+    }
+
+    private void HandleUpdatingMoneyText(int amount)
+    {
+        moneyText.text = $"{amount}";
     }
 
     private void UpdateQuestText(string itemName, int collected, int target)
