@@ -114,8 +114,12 @@ public class MouseManager : MonoBehaviour, IManager
         }
 
         selectedSlot = slot;
-        heldItemSprite.sprite = slot.Item.Sprite;
-        heldItemSprite.gameObject.SetActive(true);
+
+        if(selectedSlot.HasItem)
+        {
+            heldItemSprite.sprite = slot.Item.Sprite;
+            heldItemSprite.gameObject.SetActive(true);
+        }
     }
 
     private void HandleRightClickedPlayerSlot(PlayerInventorySlot slot)

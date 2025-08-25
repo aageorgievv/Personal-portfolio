@@ -12,6 +12,7 @@ public abstract class InventorySlot : MonoBehaviour
     protected virtual void Awake()
     {
         ValidationUtility.ValidateReference(itemIcon, nameof(itemIcon));
+        UpdateIconAlpha();
     }
 
     public virtual void AddItem(Item item)
@@ -23,11 +24,22 @@ public abstract class InventorySlot : MonoBehaviour
 
         Item = item;
         itemIcon.sprite = item.Sprite;
+        UpdateIconAlpha();
     }
 
     public virtual void ClearItem()
     {
         Item = null;
         itemIcon.sprite = null;
+        UpdateIconAlpha();
+    }
+
+    private void UpdateIconAlpha()
+    {
+        if (itemIcon == null) return;
+
+        Color color = itemIcon.color;
+        color.a = HasItem ? 1f : 0f; 
+        itemIcon.color = color;
     }
 }
