@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class Inventory : MonoBehaviour
 {
@@ -61,6 +62,7 @@ public abstract class Inventory : MonoBehaviour
 
             if (startingItem.item == null)
             {
+                Image image = GetComponentInChildren<Image>();
                 continue;
             }
 
