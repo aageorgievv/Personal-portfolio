@@ -5,12 +5,9 @@ using UnityEngine.UI;
 
 public class MouseManager : MonoBehaviour, IManager
 {
-    [SerializeField]
-    private PlayerInventory playerInventory;
-    
-
-    [SerializeField]
-    private Image heldItemSprite;
+    [SerializeField] private PlayerInventory playerInventory;
+    [SerializeField] private ShopUIHandler shopUIHandler;
+    [SerializeField] private Image heldItemSprite;
 
     private PlayerInventorySlot selectedSlot;
     private MoneyManager moneyManager;
@@ -74,8 +71,6 @@ public class MouseManager : MonoBehaviour, IManager
                     HandleClickedShopSlot(shopSlot);
                 }
             }
-
-            //ClearHeldItem();
         }
     }
 
@@ -124,8 +119,9 @@ public class MouseManager : MonoBehaviour, IManager
 
     private void HandleRightClickedPlayerSlot(PlayerInventorySlot slot)
     {
-        // detect if shop is open, and sell the item, etc
-        if (!slot.HasItem)
+        //Check if shop is open
+
+        if (!slot.HasItem || !shopUIHandler.IsShopOpen)
         {
             return;
         }

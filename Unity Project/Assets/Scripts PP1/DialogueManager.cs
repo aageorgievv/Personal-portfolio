@@ -13,12 +13,14 @@ public class DialogueManager : MonoBehaviour, IManager
     [SerializeField] private Actor actor;
     [SerializeField] private Animator dialogueAnimator;
     [SerializeField] private NPCController npcController;
+    [SerializeField] private ShopUIHandler shopUIHandler;
 
     [Header("UI References")]
     [SerializeField] private GameObject DialogueBox;
     [SerializeField] private TextMeshProUGUI DialogTitleText, DialogBodyText;
     [SerializeField] private GameObject responseButtonPrefab;
     [SerializeField] private Transform responseButtonContainer;
+    [SerializeField] private Button shopButton;
 
     [Header("Settings")]
     [SerializeField, Min(0)] float textSpeed;
@@ -32,6 +34,11 @@ public class DialogueManager : MonoBehaviour, IManager
         if (actor != null)
         {
             actor.OnDialogueStartedEvent += HandleStartDialogue;
+        }
+
+        if(shopButton != null)
+        {
+            shopButton.onClick.AddListener(() => shopUIHandler.ToggleShop());
         }
         HideDialogue();
     }
@@ -47,6 +54,8 @@ public class DialogueManager : MonoBehaviour, IManager
         DialogTitleText.text = title;
         StopAllCoroutines();
         StartCoroutine(TypeSentence(node.dialogueText));
+
+        
 
         // Create and setup response buttons based on current dialogue node
         foreach (DialogueResponse response in node.responses)

@@ -36,7 +36,10 @@ public abstract class InventorySlot : MonoBehaviour
 
     private void UpdateIconAlpha()
     {
-        if (itemIcon == null) return;
+        if (itemIcon == null)
+        {
+            return;
+        }
 
         Color color = itemIcon.color;
         color.a = HasItem ? 1f : 0f; 
