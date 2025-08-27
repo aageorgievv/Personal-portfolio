@@ -20,7 +20,6 @@ public class DialogueManager : MonoBehaviour, IManager
     [SerializeField] private TextMeshProUGUI DialogTitleText, DialogBodyText;
     [SerializeField] private GameObject responseButtonPrefab;
     [SerializeField] private Transform responseButtonContainer;
-    [SerializeField] private Button shopButton;
 
     [Header("Settings")]
     [SerializeField, Min(0)] float textSpeed;
@@ -35,12 +34,6 @@ public class DialogueManager : MonoBehaviour, IManager
         {
             actor.OnDialogueStartedEvent += HandleStartDialogue;
         }
-
-        if(shopButton != null)
-        {
-            shopButton.onClick.AddListener(() => shopUIHandler.ToggleShop());
-        }
-        HideDialogue();
     }
 
     private void StartDialogue(string title, DialogueNode node)
@@ -127,6 +120,7 @@ public class DialogueManager : MonoBehaviour, IManager
 
     public void HideDialogue()
     {
+        shopUIHandler.ToggleShop();
         dialogueAnimator.SetBool(isOpenKey, false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

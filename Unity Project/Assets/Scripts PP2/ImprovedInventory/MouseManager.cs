@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class MouseManager : MonoBehaviour, IManager
 {
     [SerializeField] private PlayerInventory playerInventory;
-    [SerializeField] private ShopUIHandler shopUIHandler;
+    [SerializeField] private PlayerControls playerControls;
     [SerializeField] private Image heldItemSprite;
 
     private PlayerInventorySlot selectedSlot;
@@ -68,7 +68,7 @@ public class MouseManager : MonoBehaviour, IManager
 
                 if (result.gameObject.TryGetComponent(out ShopInventorySlot shopSlot))
                 {
-                    HandleClickedShopSlot(shopSlot);
+                    HandleRightClickedShopSlot(shopSlot);
                 }
             }
         }
@@ -119,9 +119,10 @@ public class MouseManager : MonoBehaviour, IManager
 
     private void HandleRightClickedPlayerSlot(PlayerInventorySlot slot)
     {
-        //Check if shop is open
+        ShopUIHandler shop = playerControls.GetCurrentShop();
+        ValidationUtility.ValidateReference(shop, nameof(shop));
 
-        if (!slot.HasItem || !shopUIHandler.IsShopOpen)
+        if (!slot.HasItem || shop == null ||!shop.IsShopOpen)
         {
             return;
         }
@@ -130,7 +131,7 @@ public class MouseManager : MonoBehaviour, IManager
         slot.RemoveItem();
     }
 
-    private void HandleClickedShopSlot(ShopInventorySlot slot)
+    private void HandleRightClickedShopSlot(ShopInventorySlot slot)
     {
         if (!slot.HasItem)
         {

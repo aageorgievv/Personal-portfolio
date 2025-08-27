@@ -36,6 +36,8 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private GameObject inventory;
     [SerializeField] private float rayCastInteractionDistance = 3f;
 
+    private ShopUIHandler currentShop;
+
     private bool isInventoryOpen = false;
     //-------------------------
     void Start()
@@ -185,13 +187,25 @@ public class PlayerControls : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit hit, rayCastInteractionDistance))
             {
                 NPCController npc = hit.collider.GetComponent<NPCController>();
+                ShopUIHandler shop = hit.collider.GetComponent<ShopUIHandler>();
 
                 if (npc != null)
                 {
                     npc.TryTalk();
                 }
+
+                if (shop != null)
+                {
+                    currentShop = shop;
+                    currentShop.ToggleShop();
+                }
             }
         }
+    }
+
+    public ShopUIHandler GetCurrentShop()
+    {
+        return currentShop;
     }
 
     private void ToggleInventory()

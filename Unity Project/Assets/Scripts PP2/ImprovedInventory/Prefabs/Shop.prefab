@@ -1126,7 +1126,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemIcon: {fileID: 6918392795196459122}
-  coins: {fileID: 4164837896672857881}
+  itemName: {fileID: 0}
+  itemCost: {fileID: 0}
 --- !u!1 &8008012330033642168
 GameObject:
   m_ObjectHideFlags: 0
