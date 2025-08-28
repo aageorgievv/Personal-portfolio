@@ -33,7 +33,6 @@ public class CollectMushroomsQuest : Quest
         if(collectedMushrooms >= 8)
         {
             CompleteQuest();
-            Debug.Log("Quest Completed:");
         }
     }
 }

@@ -18,9 +18,10 @@ public class EscortState : State
     private int currentTravelPointIndex = -1;
     private int separationDistance = 6;
 
+    private bool isCurrentlyWalking = false;
+
     private const string IsCloseKey = "IsClose";
-    private const string IsWalk = "Walk";
-    private const string IsIdle = "Idle";
+    private const string IsWalking = "IsWalking";
 
     public EscortState(Animator npcAnimator, Transform npcTransform, NavMeshAgent npcAgent, Transform playerTransform, List<Transform> travelPoints, Action OnDestinationReachedEvent,  int escortWalkSpeed)
     {
@@ -59,7 +60,7 @@ public class EscortState : State
                 if (Vector3.Distance(npcTransform.position, travelPoints[currentTravelPointIndex].position) >= npcAgent.stoppingDistance)
                 {
                     npcAgent.isStopped = true;
-                    npcAnimator.SetTrigger(IsIdle);
+                    npcAnimator.SetBool(IsWalking, false);
                     OnDestinationReachedEvent.Invoke();
                 }
             }
@@ -74,21 +75,33 @@ public class EscortState : State
 
     private void CheckDistanceToPlayer()
     {
-        if (Vector3.Distance(npcTransform.position, playerTransform.position) >= separationDistance)
+        float distance = Vector3.Distance(npcTransform.position, playerTransform.position);
+
+        if (distance > separationDistance)
         {
             npcAgent.isStopped = true;
-            npcAnimator.SetTrigger(IsIdle);
 
+            if (isCurrentlyWalking)
+            {
+                npcAnimator.SetBool(IsWalking, false);
+                isCurrentlyWalking = false;
+            }
+
+            // rotate to face player
             Vector3 blacksmithToPlayer = (playerTransform.position - npcTransform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(blacksmithToPlayer);
             Quaternion targetRotation = Quaternion.Euler(0, lookRotation.eulerAngles.y, 0);
-
             npcTransform.rotation = Quaternion.Slerp(npcTransform.rotation, targetRotation, Time.deltaTime * 5f);
         }
         else
         {
             npcAgent.isStopped = false;
-            npcAnimator.SetTrigger(IsWalk);
+
+            if (!isCurrentlyWalking)
+            {
+                npcAnimator.SetBool(IsWalking, true);
+                isCurrentlyWalking = true;
+            }
         }
     }
 }
