@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using static aiControls;
@@ -7,7 +9,8 @@ public enum EState
     Idle,
     Talk,
     Fight,
-    StealingReaction
+    StealingReaction,
+    Escort
 }
 
 public enum EDialogueState
@@ -18,10 +21,13 @@ public enum EDialogueState
     QuestCompleted,
     QuestCompletedBargainedApple,
     QuestCompletedBargainedMushroom,
+    EscortQuest
 }
 
 public class NPCController : MonoBehaviour
 {
+    public Action OnDestinationReachedEvent;
+
     public EDialogueState CurrentDialogueState => currentDialogueState;
 
     [Header("References")]
@@ -38,11 +44,13 @@ public class NPCController : MonoBehaviour
     [SerializeField, Min(0)] private float minPunchSpeed;
     [SerializeField, Min(0)] private float maxPunchSpeed;
     [SerializeField, Min(0)] private float runCooldown;
+    [SerializeField, Min(0)] private int escortWalkSpeed = 3;
+    
 
     [Header("Quests")]
     [SerializeField] private CollectApplesQuest appleQuest;
     [SerializeField] private CollectMushroomsQuest mushroomsQuest;
-
+    [SerializeField] private List<Transform> travelPoints = new List<Transform>();
     private DialogueManager dialogueManager;
 
     private StateMachine<EState> stateMachine;
@@ -57,6 +65,7 @@ public class NPCController : MonoBehaviour
         ValidationUtility.ValidateReference(npcTransform, nameof(npcTransform));
         ValidationUtility.ValidateReference(npcAgent, nameof(npcAgent));
         ValidationUtility.ValidateReference(playerTransform, nameof(playerTransform));
+        ValidationUtility.ValidateReference(travelPoints, nameof(travelPoints));
 
         stateMachine = new StateMachine<EState>();
 
@@ -64,6 +73,7 @@ public class NPCController : MonoBehaviour
         stateMachine.AddState(EState.Idle, new IdleState());
         stateMachine.AddState(EState.Talk, new TalkState(this, playerControls.transform, interactionDistance));
         stateMachine.AddState(EState.Fight, new FightState(this, npcAnimator, npcAgent, playerTransform, minPunchSpeed, maxPunchSpeed, runCooldown));
+        stateMachine.AddState(EState.Escort, new EscortState(npcAnimator, npcTransform, npcAgent, playerTransform, travelPoints, () => OnDestinationReachedEvent?.Invoke(), escortWalkSpeed));
 
         stateMachine.SetState(EState.Idle);
 
@@ -114,6 +124,7 @@ public class NPCController : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, playerControls.transform.position) <= interactionDistance)
         {
+            stateMachine.SetState(EState.Talk);
             // Switch dialogues based on the current dialogue state
             switch (currentDialogueState)
             {
@@ -171,9 +182,12 @@ public class NPCController : MonoBehaviour
                         actor.StartMushroomQuestNotCompleted();
                     }
                     break;
+                    case EDialogueState.EscortQuest:
+                    //empty
+                    break;
+                default:
+                    throw new NotImplementedException();
             }
-
-            stateMachine.SetState(EState.Talk);
         }
     }
 

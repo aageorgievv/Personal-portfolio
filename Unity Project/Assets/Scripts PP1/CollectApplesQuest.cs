@@ -31,7 +31,6 @@ public class CollectApplesQuest : Quest
         if (collectedApples >= 12)
         {
             CompleteQuest();
-            Debug.Log("Quest Completed:");
         }
     }
 }

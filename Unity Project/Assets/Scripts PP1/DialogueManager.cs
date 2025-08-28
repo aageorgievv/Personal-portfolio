@@ -48,7 +48,7 @@ public class DialogueManager : MonoBehaviour, IManager
         StopAllCoroutines();
         StartCoroutine(TypeSentence(node.dialogueText));
 
-        
+
 
         // Create and setup response buttons based on current dialogue node
         foreach (DialogueResponse response in node.responses)
@@ -102,6 +102,10 @@ public class DialogueManager : MonoBehaviour, IManager
                     currentDialogueResult = EDialogueResult.MushroomBargain;
                     OnDialogueStateEvent.Invoke(EDialogueState.QuestCompletedBargainedMushroom);
                     break;
+                case EDialogueResult.EscortQuest:
+                    currentDialogueResult = EDialogueResult.EscortQuest;
+                    npcController.SetState(EState.Escort);
+                    break;
 
                 default: throw new System.NotImplementedException(response.quest.ToString());
             }
@@ -140,4 +144,6 @@ public class DialogueManager : MonoBehaviour, IManager
     public bool IsAppleQuestBargained() => currentDialogueResult == EDialogueResult.AppleBargain;
     public bool IsMushroomQuest() => currentDialogueResult == EDialogueResult.QuestCollectMushrooms;
     public bool IsMushroomQuestBargained() => currentDialogueResult == EDialogueResult.MushroomBargain;
+    public bool IsEscortQuest() => currentDialogueResult == EDialogueResult.EscortQuest;
+
 }

@@ -5,5 +5,6 @@
     QuestCollectMushrooms,
     NPCFightsBack,
     AppleBargain,
-    MushroomBargain
+    MushroomBargain,
+    EscortQuest
 }

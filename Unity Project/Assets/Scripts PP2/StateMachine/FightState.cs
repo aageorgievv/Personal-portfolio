@@ -4,7 +4,6 @@ using UnityEngine.AI;
 
 public class FightState : State
 {
-    private readonly NPCController npcController;
     private readonly Animator npcAnimator;
     private readonly Transform npcTransform;
     private readonly NavMeshAgent npcAgent;
@@ -29,7 +28,6 @@ public class FightState : State
 
     public FightState(NPCController npcController, Animator npcAnimator, NavMeshAgent npcAgent, Transform playerTransform, float minPunchSpeed, float maxPunchSpeed, float runCooldown)
     {
-        this.npcController = npcController != null ? npcController : throw new ArgumentNullException(nameof(npcController));
         this.npcAnimator = npcAnimator != null ? npcAnimator : throw new ArgumentNullException(nameof(npcAnimator));
         this.npcTransform = npcController.transform != null ? npcController.transform : throw new ArgumentNullException(nameof(npcController.transform));
         this.npcAgent = npcAgent != null ? npcAgent : throw new ArgumentNullException(nameof(npcAgent));

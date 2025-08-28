@@ -99,6 +99,11 @@ public class UIManager : MonoBehaviour, IManager
         {
             UpdateQuestText("Mushrooms", CollectMushroomsQuest.collectedMushrooms, 8);
         }
+
+        if (dialogueManager.IsEscortQuest())
+        {
+
+        }
     }
 
     private void UpdateInteractionUI()

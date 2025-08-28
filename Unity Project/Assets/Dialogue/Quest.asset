@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: Quest
   m_EditorClassIdentifier: 
   RootNode:
-    dialogueText: Hello Sir. Would you like to help me with some chores around the
-      house? It will help me a lot and I will compensate you 10 gold coins for your
-      time and effort.
+    dialogueText: Hello Sir. Would you like to help me collect some items or acompany
+      me to my ancestors ancient rock? I will pay you if you collect the items.
     responses:
-    - responseText: What kind of chores do you need done?
+    - responseText: What kind of items?
       nextNode:
         dialogueText: Well, first I need to collect some apples that have fallen
           from the apple trees across the house. I plan to make a delicious apple
@@ -58,11 +57,11 @@ MonoBehaviour:
               quest: 0
           quest: 0
       quest: 0
-    - responseText: Forget the chores, give me all of your money!
+    - responseText: Sure, I will acompany you.
       nextNode:
         dialogueText: 
         responses: []
-      quest: 3
+      quest: 6
     - responseText: '*Bargain for more money*'
       nextNode:
         dialogueText: I can give you 2 extra gold pieces, but that is all I can give
