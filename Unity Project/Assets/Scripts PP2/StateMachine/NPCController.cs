@@ -28,6 +28,8 @@ public class NPCController : MonoBehaviour
 {
     public Action OnDestinationReachedEvent;
 
+    public bool EscortCompleted => escortQuestCompleted;
+
     public EDialogueState CurrentDialogueState => currentDialogueState;
 
     [Header("References")]
@@ -57,6 +59,8 @@ public class NPCController : MonoBehaviour
 
     private EDialogueState currentDialogueState = EDialogueState.Default;
 
+    private bool escortQuestCompleted = false;
+
     private void Awake()
     {
         ValidationUtility.ValidateReference(playerControls, nameof(playerControls));
@@ -73,7 +77,7 @@ public class NPCController : MonoBehaviour
         stateMachine.AddState(EState.Idle, new IdleState());
         stateMachine.AddState(EState.Talk, new TalkState(this, playerControls.transform, interactionDistance));
         stateMachine.AddState(EState.Fight, new FightState(this, npcAnimator, npcAgent, playerTransform, minPunchSpeed, maxPunchSpeed, runCooldown));
-        stateMachine.AddState(EState.Escort, new EscortState(npcAnimator, npcTransform, npcAgent, playerTransform, travelPoints, () => OnDestinationReachedEvent?.Invoke(), escortWalkSpeed));
+        stateMachine.AddState(EState.Escort, new EscortState(npcAnimator, npcTransform, npcAgent, playerTransform, travelPoints, () => CompleteEscortQuest(), escortWalkSpeed));
 
         stateMachine.SetState(EState.Idle);
 
@@ -211,5 +215,12 @@ public class NPCController : MonoBehaviour
     {
         SetDialogueState(state);
         questMark.SetActive(false);
+    }
+
+    public void CompleteEscortQuest()
+    {
+        escortQuestCompleted = true;
+        currentDialogueState = EDialogueState.EscortQuestCompleted;
+        OnDestinationReachedEvent?.Invoke();
     }
 }

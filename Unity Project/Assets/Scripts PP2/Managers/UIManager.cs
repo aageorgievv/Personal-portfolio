@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour, IManager
     [SerializeField] private CollectApplesQuest CollectApplesQuest;
     [SerializeField] private CollectMushroomsQuest CollectMushroomsQuest;
     [SerializeField] private Camera playerCamera;
+    [SerializeField] private NPCController npcController;
 
     [Header("UI References")]
     [SerializeField] private TextMeshProUGUI questText;
@@ -102,7 +103,7 @@ public class UIManager : MonoBehaviour, IManager
 
         if (dialogueManager.IsEscortQuest())
         {
-
+            UpdateEscortQuestText("Acompany the blacksmith");
         }
     }
 
@@ -138,6 +139,12 @@ public class UIManager : MonoBehaviour, IManager
     {
         questText.color = collected >= target ? Color.green : Color.white;
         ShowQuestText($"{itemName}: {collected}/{target}");
+    }
+
+    private void UpdateEscortQuestText(string itemName)
+    {
+        questText.color = npcController.EscortCompleted ? Color.green : Color.white;
+        ShowQuestText($"{itemName}");
     }
 
     private void ShowQuestText(string text)

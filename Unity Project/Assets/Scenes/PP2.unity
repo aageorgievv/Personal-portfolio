@@ -2267,6 +2267,7 @@ MonoBehaviour:
   CollectApplesQuest: {fileID: 1581625443}
   CollectMushroomsQuest: {fileID: 1056484367}
   playerCamera: {fileID: 963194227}
+  npcController: {fileID: 781867626}
   questText: {fileID: 1344981967}
   prompt: {fileID: 775153995}
   interactionText: {fileID: 258414986}

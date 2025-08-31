@@ -90,12 +90,12 @@ public class DialogueManager : MonoBehaviour, IManager
                     break;
                 case EDialogueResult.QuestCollectApples:
                     currentDialogueResult = EDialogueResult.QuestCollectApples;
-                    OnDialogueStateEvent.Invoke(EDialogueState.QuestGivenApple);
+                    OnDialogueStateEvent?.Invoke(EDialogueState.QuestGivenApple);
                     break;
                 case EDialogueResult.QuestCollectMushrooms:
 
                     currentDialogueResult = EDialogueResult.QuestCollectMushrooms;
-                    OnDialogueStateEvent.Invoke(EDialogueState.QuestGivenMushroom);
+                    OnDialogueStateEvent?.Invoke(EDialogueState.QuestGivenMushroom);
                     break;
                 case EDialogueResult.NPCFightsBack:
 
@@ -104,15 +104,15 @@ public class DialogueManager : MonoBehaviour, IManager
                     break;
                 case EDialogueResult.AppleBargain:
                     currentDialogueResult = EDialogueResult.AppleBargain;
-                    OnDialogueStateEvent.Invoke(EDialogueState.QuestCompletedBargainedApple);
+                    OnDialogueStateEvent?.Invoke(EDialogueState.QuestCompletedBargainedApple);
                     break;
                 case EDialogueResult.MushroomBargain:
                     currentDialogueResult = EDialogueResult.MushroomBargain;
-                    OnDialogueStateEvent.Invoke(EDialogueState.QuestCompletedBargainedMushroom);
+                    OnDialogueStateEvent?.Invoke(EDialogueState.QuestCompletedBargainedMushroom);
                     break;
                 case EDialogueResult.EscortQuest:
                     currentDialogueResult = EDialogueResult.EscortQuest;
-                    OnDialogueStateEvent.Invoke(EDialogueState.EscortQuestCompleted);
+                    OnDialogueStateEvent?.Invoke(EDialogueState.EscortQuestCompleted);
                     npcController.SetState(EState.Escort);
                     break;
 
