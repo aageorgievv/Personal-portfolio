@@ -13,3 +13,17 @@ Character - https://assetstore.unity.com/packages/3d/characters/humanoids/humans
 Environment - https://assetstore.unity.com/packages/3d/environments/lowpoly-environment-nature-free-medieval-fantasy-series-187052
 
 House - https://assetstore.unity.com/packages/3d/environments/fantasy/3d-the-blacksmith-s-house-252972
+
+Edit 2 :
+
+Over the past few weeks, I’ve been working on Personal Portfolio, focusing on improving the structure and maintainability of my code from my very first project. Here’s a quick breakdown of what I accomplished:
+
+
+
+- A new class-based Finite State Machine for NPC behaviors.
+
+- Individual states: Idle, Talk, Fight, Escort
+
+- Shop & inventory system (scalable for multiple NPCs)
+
+- Escort quest with additional dialogue
