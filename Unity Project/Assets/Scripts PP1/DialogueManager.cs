@@ -36,6 +36,14 @@ public class DialogueManager : MonoBehaviour, IManager
         }
     }
 
+    private void OnDestroy()
+    {
+        if (actor != null)
+        {
+            actor.OnDialogueStartedEvent -= HandleStartDialogue;
+        }
+    }
+
     private void StartDialogue(string title, DialogueNode node)
     {
         // Remove any existing response buttons
@@ -104,12 +112,14 @@ public class DialogueManager : MonoBehaviour, IManager
                     break;
                 case EDialogueResult.EscortQuest:
                     currentDialogueResult = EDialogueResult.EscortQuest;
+                    OnDialogueStateEvent.Invoke(EDialogueState.EscortQuestCompleted);
                     npcController.SetState(EState.Escort);
                     break;
 
                 default: throw new System.NotImplementedException(response.quest.ToString());
             }
         }
+
     }
 
     IEnumerator TypeSentence(string sentence)

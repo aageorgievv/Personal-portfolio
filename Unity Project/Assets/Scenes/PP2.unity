@@ -4438,6 +4438,7 @@ MonoBehaviour:
   DialogueMushroomQuestCompletedBargained: {fileID: 11400000, guid: 6a88b7f5f96e3ef4ca80b8b1499791a0, type: 2}
   AppleQuestNotCompleted: {fileID: 11400000, guid: ca56deb2e0266e241936a1ef324aff6f, type: 2}
   MushroomQuestNotCompleted: {fileID: 11400000, guid: d089dbe48d78063449121bb5db39bee4, type: 2}
+  EscortQuestCompleted: {fileID: 11400000, guid: c78ffd986d48fe84f85bf7210e80daf2, type: 2}
 --- !u!95 &781867617 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 4957605393579145647, guid: 4f46098734d87e24490aef9267915ad2, type: 3}

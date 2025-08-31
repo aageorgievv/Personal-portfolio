@@ -61,6 +61,7 @@ public class EscortState : State
                 {
                     npcAgent.isStopped = true;
                     npcAnimator.SetBool(IsWalking, false);
+                    RotateTowardsPlayer();
                     OnDestinationReachedEvent.Invoke();
                 }
             }
@@ -87,11 +88,7 @@ public class EscortState : State
                 isCurrentlyWalking = false;
             }
 
-            // rotate to face player
-            Vector3 blacksmithToPlayer = (playerTransform.position - npcTransform.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(blacksmithToPlayer);
-            Quaternion targetRotation = Quaternion.Euler(0, lookRotation.eulerAngles.y, 0);
-            npcTransform.rotation = Quaternion.Slerp(npcTransform.rotation, targetRotation, Time.deltaTime * 5f);
+            RotateTowardsPlayer();
         }
         else
         {
@@ -103,5 +100,14 @@ public class EscortState : State
                 isCurrentlyWalking = true;
             }
         }
+    }
+
+    private void RotateTowardsPlayer()
+    {
+        // rotate to face player
+        Vector3 blacksmithToPlayer = (playerTransform.position - npcTransform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(blacksmithToPlayer);
+        Quaternion targetRotation = Quaternion.Euler(0, lookRotation.eulerAngles.y, 0);
+        npcTransform.rotation = Quaternion.Slerp(npcTransform.rotation, targetRotation, Time.deltaTime * 5f);
     }
 }

@@ -21,7 +21,7 @@ public enum EDialogueState
     QuestCompleted,
     QuestCompletedBargainedApple,
     QuestCompletedBargainedMushroom,
-    EscortQuest
+    EscortQuestCompleted
 }
 
 public class NPCController : MonoBehaviour
@@ -182,8 +182,9 @@ public class NPCController : MonoBehaviour
                         actor.StartMushroomQuestNotCompleted();
                     }
                     break;
-                    case EDialogueState.EscortQuest:
-                    //empty
+                    case EDialogueState.EscortQuestCompleted:
+                    actor.EscortQuestComplete();
+                    currentDialogueState = EDialogueState.EscortQuestCompleted;
                     break;
                 default:
                     throw new NotImplementedException();

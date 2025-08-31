@@ -14,6 +14,7 @@ public class Actor : MonoBehaviour
     [SerializeField] private Dialogue DialogueMushroomQuestCompletedBargained;
     [SerializeField] private Dialogue AppleQuestNotCompleted;
     [SerializeField] private Dialogue MushroomQuestNotCompleted;
+    [SerializeField] private Dialogue EscortQuestCompleted;
 
 
     private void Awake()
@@ -55,5 +56,9 @@ public class Actor : MonoBehaviour
     public void StartMushroomQuestNotCompleted()
     {
         OnDialogueStartedEvent?.Invoke(Name, MushroomQuestNotCompleted.RootNode);
+    }
+    public void EscortQuestComplete()
+    {
+        OnDialogueStartedEvent?.Invoke(Name, EscortQuestCompleted.RootNode);
     }
 }
